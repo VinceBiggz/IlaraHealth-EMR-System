@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../db');
+const pool = require('../db/db');
 const authenticateToken = require('../middleware/authMiddleware'); // Make sure to adjust the path if necessary
 
 // Get all users (admin only)
