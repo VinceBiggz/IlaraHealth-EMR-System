@@ -100,33 +100,61 @@ The Ilara Health EMR System simplifies inventory management and patient care, en
 ## Project Structure
 ```
 project-root/
-├── backend/
-│   ├── app.js                # Main application file
-│   ├── db                    # Database connection and configuration
-│   │   └── db.js
-│   ├── middleware            # Middleware functions (e.g., authMiddleware.js)
-│   ├── models                # (Optional) Database models
-│   ├── routes                # API route definitions (auth.js, inventory.js, users.js)
-│   ├── tests                 # Test files
-│   ├── utils
-│   │   └── tokenUtils.js
-│   ├── jest.config.js        # Jest configuration file
-│   ├── package-lock.json
-│   └── package.json
+├── README.md
+├── backend
+│   ├── README.md
+│   ├── app.js
+│   ├── db
+│   │   ├── db.js
+│   │   └── test_db.js
+│   ├── jest.config.js
+│   ├── middleware
+│   │   └── authMiddleware.js
+│   ├── models
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── routes
+│   │   ├── auth.js
+│   │   ├── inventory.js
+│   │   └── users.js
+│   ├── tests
+│   │   └── inventory.test.js
+│   └── utils
+│       └── tokenUtils.js
+├── docs
+│   ├── flowcharts
+│   │   ├── data-flow-diagram.png
+│   │   ├── prescription-sequence-diagram.png
+│   │   └── system-architecture-diagram.png
+│   ├── system-design.md
+│   └── task-breakdown.md
 └── frontend
-├── public                # Static files
-├── src                   # Source code
-│   ├── api.ts             # API service
-│   ├── App.tsx            # Main app component
-│   ├── components         # Reusable UI components
-│   ├── pages              # Page components (InventoryList, etc.)
-│   ├── services           # Utility functions, data fetching logic
-│   ├── types.ts           # TypeScript type definitions
-│   ├── index.css
-│   ├── main.tsx           # Frontend entry point
-│   └── vite.config.ts     # Vite configuration
-├── package-lock.json
-└── package.json
+    ├── README.md
+    ├── emr-frontend
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── public
+    │   ├── src
+    │   │   ├── App.css
+    │   │   ├── App.tsx
+    │   │   ├── assets
+    │   │   │   └── vite.svg
+    │   │   ├── components
+    │   │   │   ├── LoginForm.tsx
+    │   │   │   └── LowStockAlert.tsx
+    │   │   ├── index.css
+    │   │   ├── index.html
+    │   │   ├── main.tsx
+    │   │   ├── pages
+    │   │   │   ├── AddMedicationForm.tsx
+    │   │   │   ├── Auth.tsx
+    │   │   │   └── InventoryList.tsx
+    │   │   ├── services
+    │   │   │   └── api.ts
+    │   │   └── types.ts
+    │   └── vite.config.ts
+    ├── package-lock.json
+    └── package.json
 ```
 
 ## Contributing
