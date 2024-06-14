@@ -3,17 +3,17 @@ import { Navbar, Container, Nav, Alert, Button } from 'react-bootstrap';
 import LoginForm from './components/LoginForm';
 import InventoryList from './pages/InventoryList';
 import api from './services/api';
-import { useNavigate } from 'react-router-dom'; // Import for redirection
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [authToken, setAuthToken] = useState<string | null>(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
-  const handleLogin = async (credentials: any) => {
+  const handleLogin = async (username: string, password: string) => {
     try {
-      const response = await api.post('/auth/login', credentials);
+      const response = await api.post('/auth/login', { username, password });
       if (response.data.success) {
         setIsLoggedIn(true);
         setAuthToken(response.data.token);
@@ -40,7 +40,6 @@ function App() {
   };
 
   useEffect(() => {
-    // Check for existing token in local storage and set authentication state
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
       setIsLoggedIn(true);
@@ -49,7 +48,6 @@ function App() {
   }, []); 
 
   useEffect(() => {
-    // Update Authorization header and localStorage
     if (authToken) {
       api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
       localStorage.setItem('authToken', authToken);
