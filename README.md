@@ -51,7 +51,7 @@ The Ilara Health EMR System simplifies inventory management and patient care, en
 
 1.  **Clone the repository:**
     ```bash
-    git clone [invalid URL removed]
+    git clone 
     ```
 2.  **Navigate to the backend directory:**
     ```bash
