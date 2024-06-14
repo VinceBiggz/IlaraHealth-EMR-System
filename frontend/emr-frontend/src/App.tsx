@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Alert, Button } from 'react-bootstrap';
 import LoginForm from './components/LoginForm';
@@ -92,4 +91,3 @@ function App() {
 }
 
 export default App;
-
