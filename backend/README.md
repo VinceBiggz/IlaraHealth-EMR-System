@@ -101,6 +101,7 @@ quantity (INTEGER NOT NULL)
 low_stock_threshold (INTEGER NOT NULL)
 
 ## Project Structure
+```
 ├── app.js                # Main application file
 ├── db                    # Database connection and configuration
 │   └── db.js
@@ -111,7 +112,7 @@ low_stock_threshold (INTEGER NOT NULL)
 ├── tests                 # Test files
 └── utils
     └── tokenUtils.js
-
+```
 ## Contributing
 
 Contributions are welcome! Please follow these steps:

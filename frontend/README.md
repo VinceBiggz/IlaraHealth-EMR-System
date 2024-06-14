@@ -68,7 +68,7 @@ This frontend project is a React application designed to provide a user-friendly
 2.  **Inventory List:** View the current inventory, including item details and low stock thresholds.
 
 ## Project Structure
-
+```
 src
 ├── components           # Reusable components (LoginForm, LowStockAlert)
 ├── pages                # Page-level components (InventoryList)
@@ -78,7 +78,7 @@ src
 ├── index.css            # Global styles
 ├── main.tsx             # Entry point of the application
 └── vite.config.ts       # Vite configuration file
-
+```
 
 ## Contributing
 

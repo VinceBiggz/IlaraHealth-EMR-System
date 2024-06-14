@@ -98,7 +98,7 @@ The Ilara Health EMR System simplifies inventory management and patient care, en
 4.  Admins have full access, including user management.
 
 ## Project Structure
-
+```
 project-root/
 ├── backend/
 │   ├── app.js                # Main application file
@@ -127,6 +127,7 @@ project-root/
 │   └── vite.config.ts     # Vite configuration
 ├── package-lock.json
 └── package.json
+```
 
 ## Contributing
 
