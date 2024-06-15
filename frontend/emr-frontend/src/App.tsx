@@ -36,7 +36,7 @@ function App() {
     setIsLoggedIn(false);
     setAuthToken(null); 
     localStorage.removeItem('authToken');
-    navigate('/login'); // Redirect to login after logout
+    navigate('emr-frontend/login'); // Redirect to login after logout
   };
 
   useEffect(() => {
