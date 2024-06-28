@@ -1,43 +1,50 @@
-import React, { useState, useEffect } from 'react';
+// src/frontend/emr-frontend/src/pages/InventoryList.tsx
+import React, { useEffect, useState } from 'react';
 import { Table, Alert, Spinner, Container, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
+interface InventoryListProps {
+  inventoryData: InventoryItem[];
+}
+
 interface InventoryItem {
-  id: number;
+  item_id: number;
   name: string;
   quantity: number;
   low_stock_threshold: number;
 }
 
-function InventoryList() {
-  const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
+const InventoryList: React.FC<InventoryListProps> = ({ inventoryData }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchInventoryData = async () => {
-      try {
-        const response = await api.get('/api/inventory');
-        setInventoryData(response.data);
-        setError(null); // Clear previous errors
-      } catch (err: any) {
-        if (err.response && err.response.status === 401) {
-          setError('Unauthorized. Please log in again.');
-          navigate('/login');
-        } else if (err.response && err.response.status === 404) {
-          setError('Inventory data not found.');
-        } else {
-          setError('An unexpected error occurred while fetching inventory data.');
+    if (inventoryData.length > 0) {
+      setLoading(false);
+    } else {
+      const fetchInventoryData = async () => {
+        try {
+          const response = await api.get('/inventory/items/');
+          setError(null);
+        } catch (err: any) {
+          if (err.response && err.response.status === 401) {
+            setError('Unauthorized. Please log in again.');
+            navigate('/login');
+          } else if (err.response && err.response.status === 404) {
+            setError('Inventory data not found.');
+          } else {
+            setError('An unexpected error occurred while fetching inventory data.');
+          }
+        } finally {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    fetchInventoryData();
-  }, [navigate]);
+      fetchInventoryData();
+    }
+  }, [inventoryData, navigate]);
 
   return (
     <Container>
@@ -63,13 +70,13 @@ function InventoryList() {
               </thead>
               <tbody>
                 {inventoryData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.id}</td>
+                  <tr key={item.item_id}>
+                    <td>{item.item_id}</td>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
                     <td>{item.low_stock_threshold}</td>
                     <td>
-                      <Button variant="info" size="sm" onClick={() => console.log(`Edit item ${item.id}`)}>
+                      <Button variant="info" size="sm" onClick={() => console.log(`Edit item ${item.item_id}`)}>
                         Edit
                       </Button>
                     </td> 
@@ -82,6 +89,6 @@ function InventoryList() {
       )}
     </Container>
   );
-}
+};
 
 export default InventoryList;

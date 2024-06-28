@@ -1,13 +1,12 @@
-// src/frontend/emr-frontend/src/App.tsx
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import LoginForm from './LoginForm';;
+import LoginForm from './LoginForm';
 import InventoryList from './pages/InventoryList';
 import AddMedicationForm from './pages/AddMedicationForm';
-import LowStockAlert from './pages/LowStockAlert';
 import { Button, Container, Nav, Navbar, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import api from './services/api';
+import { InventoryItem } from './types';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,7 +41,7 @@ function App() {
         setAuthToken(response.data.token);
         localStorage.setItem("authToken", response.data.token);
         setLoginError("");
-        navigate("/inventory");
+        navigate("/inventory/");
       } else {
         setLoginError(response.data.message || "Login failed.");
       }
@@ -68,8 +67,8 @@ function App() {
 
   const fetchInventoryData = async () => {
     try {
-      const response = await api.get('/inventory/items'); 
-      setInventory(response.data);
+      const response = await api.get('/inventory/'); 
+      setInventoryData(response.data);
     } catch (error) {
       console.error('Error fetching inventory:', error);
     }
@@ -79,7 +78,7 @@ function App() {
     if (isLoggedIn) {
       fetchInventoryData();
     }
-  }, [isLoggedIn]); // Fetch inventory data when logged in
+  }, [isLoggedIn]);
 
   const renderContent = () => {
     if (!isLoggedIn) {

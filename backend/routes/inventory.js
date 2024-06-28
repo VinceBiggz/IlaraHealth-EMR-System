@@ -19,11 +19,47 @@ const transporter = nodemailer.createTransport({
 // GET /api/inventory - Get all inventory items
 router.get("/", authenticateToken, async (req, res) => {
   try {
-    const items = await pool.query("SELECT * FROM inventory");
-    res.json(items.rows);
+    const allInventory = await pool.query("SELECT * FROM inventory");
+    const inventory = allInventory.rows;
+
+    if (inventory.length === 0) {
+      res
+        .status(404)
+        .json({ success: false, message: "Inventory data not found" });
+    } else {
+      res.json({ success: true, data: inventory });
+    }
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server Error" });
+    console.error("Error fetching inventory data:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+router.get("/:id", authenticateToken, async (req, res) => {
+  const id = parseInt(req.params.id, 10); // Parse id to an integer (base 10)
+
+  // Input validation: Check if the ID is a valid number
+  if (isNaN(id)) {
+    return res.status(400).json({ success: false, message: "Invalid item ID" });
+  }
+
+  try {
+    const itemResult = await pool.query(
+      "SELECT * FROM inventory WHERE item_id=$1",
+      [id]
+    );
+    const item = itemResult.rows[0];
+
+    if (!item) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Inventory item not found" });
+    }
+
+    res.json({ success: true, data: item });
+  } catch (err) {
+    console.error("Error fetching inventory item:", err);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
@@ -32,7 +68,7 @@ router.get("/:id", authenticateToken, async (req, res) => {
   const itemId = parseInt(req.params.id);
   try {
     const item = await pool.query(
-      "SELECT * FROM inventory WHERE item_id = $1",
+      "SELECT * FROM inventory WHERE item_id=$1",
       [itemId]
     );
     if (item.rows.length === 0) {
